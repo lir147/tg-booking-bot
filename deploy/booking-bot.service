@@ -1,0 +1,15 @@
+[Unit]
+Description=Telegram booking bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bot
+WorkingDirectory=/opt/tg-booking-bot
+ExecStart=/opt/tg-booking-bot/.venv/bin/python -m bot
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

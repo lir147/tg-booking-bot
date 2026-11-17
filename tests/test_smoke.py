@@ -35,3 +35,16 @@ def test_routers_attach_to_dispatcher():
     dp = Dispatcher()
     dp.include_router(admin.build_router(admin_id=1))
     dp.include_router(client.router)
+
+
+def test_admin_reply_filter_finds_tag_mid_text():
+    from types import SimpleNamespace
+
+    from aiogram import F
+
+    flt = F.reply_to_message.text.regexp(admin.USER_TAG, mode="search")
+    msg = SimpleNamespace(
+        reply_to_message=SimpleNamespace(text="❓ Вопрос\n👤 Кирилл #id42\n\nтекст")
+    )
+    match = flt.resolve(msg)
+    assert match and match.group(1) == "42"

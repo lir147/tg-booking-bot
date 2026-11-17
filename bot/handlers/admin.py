@@ -34,7 +34,7 @@ def build_router(admin_id: int) -> Router:
         ]
         await message.answer("<b>Предстоящие записи:</b>\n" + "\n".join(lines))
 
-    @router.message(F.reply_to_message.text.regexp(USER_TAG).as_("tag"), F.text)
+    @router.message(F.reply_to_message.text.regexp(USER_TAG, mode="search").as_("tag"), F.text)
     async def reply_to_client(
         message: Message, tag: re.Match[str], bot: Bot, business: BusinessProvider
     ) -> None:
